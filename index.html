@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>d3</title>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <style>
+        svg {
+            margin: 30px 10px;
+            display: block;
+        }
+        
+        p {
+            border: 2px solid red;
+            height: 40px;
+            line-height: 40px;
+            width: 100px;
+            padding: 0 10px;
+        }
+        
+        input[type="button"] {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <p id="random_num"></p>
+        <input type="button" onclick="launch()" value="啟動">
+    </div>
+
+    <hr>
+
+    <script>
+        //1.=================================
+        function launch() {
+            d3.select("p#random_num")
+                .text(random(1911, 2016));
+        }
+
+        function random(n, m) {
+            return Math.ceil(Math.random() * (m - n) + n);
+        }
+
+        //2.=================================
+        var svg2 = d3.select("body")
+            .append("svg")
+            .attr({
+                width: 300,
+                height: 200,
+                id: "svg2"
+            });
+
+        //背景
+        svg2.append("rect")
+            .attr({
+                width: "100%",
+                height: "100%",
+                fill: "OldLace"
+            });
+
+        //音符
+        svg2.append("circle")
+            .attr({
+                cx: 150,
+                cy: 120,
+                r: 15
+            });
+
+        svg2.append("rect")
+            .attr({
+                x: 160,
+                y: 45,
+                width: 5,
+                height: 78
+            });
+
+        //五線譜
+        for (var i = 0; i < 5; i++) {
+            svg2.append("line")
+                .attr({
+                    x1: 0,
+                    y1: 45 + (i * 30),
+                    x2: 300,
+                    y2: 45 + (i * 30),
+                    stroke: "black"
+                });
+        }
+
+        //文字
+        svg2.append("text")
+            .attr({
+                x: 135,
+                y: 200,
+                "font-size": 40,
+                "font-family": "arial"
+            })
+            .text("A")
+
+        //3.=================================
+        var svg3 = d3.select("body")
+            .append("svg")
+            .attr({
+                width: 320,
+                height: 250,
+                id: "svg3"
+            });
+
+        for (var i = 0; i < 20; i++) {
+
+            var num = random(20, 300);
+
+            svg3.append("rect")
+                .attr({
+                    x: 0,
+                    y: i * 12,
+                    width: num,
+                    height: 10,
+                    fill: "#f00"
+                });
+
+            svg3.append("text")
+                .attr({
+                    x: 15 + num,
+                    y: 10 + (12 * i),
+                    "font-size": "12px"
+                })
+                .text(num);
+        }
+
+        //4.=================================
+        var svg4 = d3.select("body")
+            .append("svg")
+            .attr({
+                width: 320,
+                height: 280,
+                id: "svg4"
+            });
+
+        var points = "0,0 ";
+
+        for (var i = 1; i <= 20; i++) {
+
+            var num = random(20, 300);
+
+            points += num + "," + (12 * i) + " ";
+
+            svg4.append("circle")
+                .attr({
+                    cx: num,
+                    cy: 12 * i,
+                    r: 3,
+                    fill: "#f00"
+                });
+
+            svg4.append("text")
+                .attr({
+                    x: 10 + num,
+                    y: (12 * i) + 4,
+                    "font-size": "12px"
+                })
+                .text(num);
+
+        }
+
+        points = points + "0," + (12 * 21) + " ";
+        //console.log(points);
+
+        svg4.append("polyline")
+            .attr({
+                points: points,
+                fill: "transparent",
+                stroke: "black"
+            });
+
+    </script>
+
+</body>
+
+</html>
